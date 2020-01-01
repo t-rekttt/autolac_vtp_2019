@@ -65,8 +65,8 @@ if __name__ == '__main__':
     while (turnsLeft):
         rollResult = vtp.play()
         reward = ''
-        if (result['data']):
-            reward = result['data']['name']
+        if (rollResult['data']):
+            reward = rollResult['data']['name']
         print(f"Turns left: {turnsLeft}. Rolled: {rollResult['status']['message']}. {reward}")
         # print(rollResult)
         turnsLeft -= 1
