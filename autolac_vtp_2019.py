@@ -38,31 +38,34 @@ class ViettelPay:
     def play(self):
         return self.s.post('https://vtpay8.viettel.vn/shake-2020/game/play').json()
 
-print('ViettelPay auto roll 2019 - By T-Rekt - J2TEAM\n')
+if __name__ == '__main__':
+    print('ViettelPay auto roll 2019 - By T-Rekt - J2TEAM\n')
 
-print('Please input your phone number: ')
-phone = input()
-if (phone[0] == '0'):
-    phone = phone[1:]
+    print('Please input your phone number: ')
+    phone = input()
+    if (phone[0] == '0'):
+        phone = phone[1:]
 
-vtp = ViettelPay(phone)
-sendOtp = vtp.requestLogin(phone)
+    vtp = ViettelPay(phone)
+    sendOtp = vtp.requestLogin(phone)
 
-if (sendOtp['status']['code'] != '00'):
-    print('Send OTP failed')
-    exit(0)
+    if (sendOtp['status']['code'] != '00'):
+        print('Send OTP failed')
+        exit(0)
 
-print('Please input your OTP: ')
-otp = input()
-if (vtp.login(otp)[1]['status']['code'] != '00'):
-    print('Login failed')
-    exit(0)
+    print('Please input your OTP: ')
+    otp = input()
+    if (vtp.login(otp)[1]['status']['code'] != '00'):
+        print('Login failed')
+        exit(0)
 
-profile = vtp.getProfile()
-turnsLeft = profile['data']['totalTurnLeft']
+    profile = vtp.getProfile()
+    turnsLeft = profile['data']['totalTurnLeft']
 
-while (turnsLeft):
-    print(f"Turns left: {turnsLeft}. Rolled: {vtp.play()['status']['message']}")
-    turnsLeft -= 1
+    while (turnsLeft):
+        rollResult = vtp.play()
+        print(f"Turns left: {turnsLeft}. Rolled: {rollResult}")
+        # print(rollResult)
+        turnsLeft -= 1
 
-print('Out of turn')
+    print('Out of turn')
