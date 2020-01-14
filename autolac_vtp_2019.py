@@ -1,5 +1,7 @@
 import requests, json
 
+BASE_URL = 'https://vtpay9.viettel.vn'
+
 class ViettelPay:
     def __init__(self, phone, token = None):
         self.phone = phone
@@ -18,12 +20,12 @@ class ViettelPay:
         self.s = s
     
     def requestLogin(self, phone):
-        return self.s.get('https://vtpay8.viettel.vn/shake-2020/user/request-login').json()
+        return self.s.get(BASE_URL + '/shake-2020/user/request-login').json()
 
     def login(self, otp):
         data = {'otp': otp}
         
-        r = self.s.post('https://vtpay8.viettel.vn/shake-2020/user/login', data=json.dumps(data)).json()
+        r = self.s.post(BASE_URL + '/shake-2020/user/login', data=json.dumps(data)).json()
         
         if (r['status']['code'] != '00'):
             return [False, r]
@@ -33,10 +35,10 @@ class ViettelPay:
         return [True, r]
 
     def getProfile(self):
-        return self.s.get('https://vtpay8.viettel.vn/shake-2020/user/profile').json()
+        return self.s.get(BASE_URL + '/shake-2020/user/profile').json()
 
     def play(self):
-        return self.s.post('https://vtpay8.viettel.vn/shake-2020/game/play').json()
+        return self.s.post(BASE_URL + '/shake-2020/game/play').json()
 
 if __name__ == '__main__':
     print('ViettelPay auto roll 2019 - By T-Rekt - J2TEAM\n')
